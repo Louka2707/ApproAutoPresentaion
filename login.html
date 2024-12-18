@@ -1,20 +1,3 @@
-<?php
-$identifiant = 'invite';
-$passWord = 'A@Ga2e45';
-
-// Vérifier si les champs "identifiant" et "password" existent dans $_POST
-if (isset($_POST["identifiant"]) && isset($_POST["password"])) {
-    if ($_POST["identifiant"] === $identifiant && $_POST["password"] === $passWord) {
-        header('Location: http://localhost:8000/index.html');
-        exit();
-    } else {
-        $error_message = "Identifiant ou mot de passe incorrect.";
-    }
-} else {
-    $error_message = "Veuillez remplir tous les champs.";
-}
-?>
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -26,7 +9,7 @@ if (isset($_POST["identifiant"]) && isset($_POST["password"])) {
     <link rel="stylesheet" href="styles/login-styles.css">
 </head>
 <body>
-    <form method="POST" action="/login.php">
+    <form id="loginForm">
         <div class="mb-3">
           <label for="exampleInputEmail1" class="form-label">Identifiant</label>
           <input type="text" class="form-control" id="exampleInputEmail1" name="identifiant" aria-describedby="emailHelp">
@@ -39,19 +22,35 @@ if (isset($_POST["identifiant"]) && isset($_POST["password"])) {
           </div>
         </div>
         <button type="submit" class="btn btn-primary">Se Connecter</button>
+        <div id="error-message" class="text-danger mt-2"></div>
       </form>
 
     <script>
         const togglePasswordButton = document.getElementById('togglePassword');
         const passwordInput = document.getElementById('exampleInputPassword1');
+        const loginForm = document.getElementById('loginForm');
+        const errorMessage = document.getElementById('error-message');
+
+        const validIdentifiant = 'invite';
+        const validPassword = 'A@Ga2e45';
 
         togglePasswordButton.addEventListener('click', function () {
-            // Vérifie le type de l'input et le change
             const type = passwordInput.type === 'password' ? 'text' : 'password';
             passwordInput.type = type;
-
-            // Change l'icône ou le texte du bouton
             togglePasswordButton.textContent = type === 'password' ? '🙈' : '👁️';
+        });
+
+        loginForm.addEventListener('submit', function (event) {
+            event.preventDefault(); // Empêche l'envoi du formulaire
+
+            const identifiant = loginForm.identifiant.value;
+            const password = loginForm.password.value;
+
+            if (identifiant === validIdentifiant && password === validPassword) {
+                window.location.href = 'http://localhost:8000/index.html'; // Redirection
+            } else {
+                errorMessage.textContent = "Identifiant ou mot de passe incorrect.";
+            }
         });
     </script>
 </body>
