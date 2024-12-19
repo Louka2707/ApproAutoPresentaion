@@ -44,6 +44,11 @@ nav a::before {
     transition: transform 0.3s ease;
 }
 
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
 nav a:hover::before {
     transform: scaleX(1);
 }
@@ -84,10 +89,6 @@ header h1{
     text-decoration: underline;
 }
 
-a {
-    text-decoration: none;
-    color: inherit;
-}
 .presentation{
     margin: 20px;
     display: flex;
